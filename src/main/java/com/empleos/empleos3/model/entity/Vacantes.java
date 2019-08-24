@@ -52,7 +52,7 @@ public class Vacantes {
     @Column(name = "logo_empresa")
     private String logoEmpresa;
     @Column(name = "estado")
-    private boolean estado;
+    private int estado;
     @OneToOne
     private Users users;
     @OneToOne
@@ -61,7 +61,7 @@ public class Vacantes {
     public Vacantes() {
     }
 
-    public Vacantes(String nombreVacante, int numeroPlazas, String genero, String estadoCivil, int edad, int experiencia, String idioma, String escolaridad, String horario, String diasLavorales, double sueldoBase, String prestaciones, String comiciones, String tipoContrato, String nivelVacante, int opcionViaje, String funcion, String conociomientos, String habilidades, String requisitosAdd, String logoEmpresa, boolean estado, Users users, Carreras carreras) {
+    public Vacantes(String nombreVacante, int numeroPlazas, String genero, String estadoCivil, int edad, int experiencia, String idioma, String escolaridad, String horario, String diasLavorales, double sueldoBase, String prestaciones, String comisiones, String tipoContrato, String nivelVacante, int opcionViaje, String funcion, String conociomientos, String habilidades, String requisitosAdd, String logoEmpresa, int estado, Users users, Carreras carreras) {
         this.nombreVacante = nombreVacante;
         this.numeroPlazas = numeroPlazas;
         this.genero = genero;
@@ -74,7 +74,7 @@ public class Vacantes {
         this.diasLavorales = diasLavorales;
         this.sueldoBase = sueldoBase;
         this.prestaciones = prestaciones;
-        this.comisiones = comiciones;
+        this.comisiones = comisiones;
         this.tipoContrato = tipoContrato;
         this.nivelVacante = nivelVacante;
         this.opcionViaje = opcionViaje;
@@ -264,11 +264,11 @@ public class Vacantes {
         this.logoEmpresa = logoEmpresa;
     }
 
-    public boolean isEstado() {
+    public int getEstado() {
         return estado;
     }
 
-    public void setEstado(boolean estado) {
+    public void setEstado(int estado) {
         this.estado = estado;
     }
 
