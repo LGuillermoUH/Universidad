@@ -1,6 +1,7 @@
 package com.empleos.empleos3.controllers;
 
 import com.empleos.empleos3.model.dao.IRolesDao;
+import com.empleos.empleos3.model.dao.IUsersDao;
 import com.empleos.empleos3.model.entity.Empresa;
 import com.empleos.empleos3.model.entity.Role;
 import com.empleos.empleos3.model.entity.Users;
@@ -35,7 +36,9 @@ public class UserController {
     public IContactoService contactoService;
     @Autowired
     public IEmpresaService empresaService;
-    public void sendEmailWithoutTemplating(Integer idPersona) throws UnsupportedEncodingException {
+    @Autowired
+    public IUsersDao usersDao;
+    public void sendEmailWithoutTemplating(int idPersona) throws UnsupportedEncodingException {
         final Email email = DefaultEmail.builder()
                 .from(new InternetAddress("pruebas.hext.pruebas@gmail.com", "Marco Tullio Cicerone "))
                 .to(Lists.newArrayList(new InternetAddress("luisg1.luis@gmail.com", "Luis guillermo")))
@@ -60,8 +63,9 @@ public class UserController {
         Set<Role> roles = new HashSet<Role>();
         roles.add(rolesDao.findOne(2));
         users.setRoles(roles);
-        sendEmailWithoutTemplating(users.getId());
         userService.save(users);
+        String Email = users.getEmail();
+        sendEmailWithoutTemplating(usersDao.findByEmail(Email).getId());
          
     }
     //delete
