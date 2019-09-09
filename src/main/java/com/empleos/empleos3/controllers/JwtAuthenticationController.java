@@ -34,11 +34,12 @@ public class JwtAuthenticationController {
 
 	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
-		int valid= usersDao.findByEmail(authenticationRequest.getUsername()).getActive();
+		authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
+		int valid = usersDao.findByEmail(authenticationRequest.getUsername()).getActive();
 		if(valid==0){
 			return (ResponseEntity<?>) ResponseEntity.badRequest();
 		}else{
-			authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
+
 
 			final UserDetails userDetails = userDetailsService
 					.loadUserByUsername(authenticationRequest.getUsername());
