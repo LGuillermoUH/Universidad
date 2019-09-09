@@ -34,15 +34,19 @@ public class JwtAuthenticationController {
 
 	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
+		int valid= usersDao.findByEmail(authenticationRequest.getUsername()).getActive();
+		if(valid==0){
+			return (ResponseEntity<?>) ResponseEntity.badRequest();
+		}else{
+			authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
 
-		authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
+			final UserDetails userDetails = userDetailsService
+					.loadUserByUsername(authenticationRequest.getUsername());
 
-		final UserDetails userDetails = userDetailsService
-				.loadUserByUsername(authenticationRequest.getUsername());
-
-		final String token = jwtTokenUtil.generateToken(userDetails);
-		Users users= usersDao.findByEmail(authenticationRequest.getUsername());
-		return ResponseEntity.ok(new JwtResponse(token, users));
+			final String token = jwtTokenUtil.generateToken(userDetails);
+			Users users= usersDao.findByEmail(authenticationRequest.getUsername());
+			return ResponseEntity.ok(new JwtResponse(token, users));
+		}
 	}
 
 	private void authenticate(String username, String password) throws Exception {
