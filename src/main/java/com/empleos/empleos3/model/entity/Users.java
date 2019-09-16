@@ -4,7 +4,6 @@ package com.empleos.empleos3.model.entity;
 
 
 import com.empleos.empleos3.model.utils.EncrytedPasswordUtils;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -76,7 +75,7 @@ public class Users {
     public void setEmail(String email) {
         this.email = email;
     }
-    
+
     public String getPassword() {
         return password;
     }
