@@ -19,7 +19,6 @@ public class Users {
     @Column(name = "email")
     private String email;
     @Column(name = "password")
-    @JsonIgnore
     private String password;
     @Column(name = "name")
     private String name;
@@ -77,7 +76,7 @@ public class Users {
     public void setEmail(String email) {
         this.email = email;
     }
-
+    @JsonIgnore
     public String getPassword() {
         return password;
     }
