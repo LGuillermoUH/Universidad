@@ -88,7 +88,7 @@ public class UserController {
         return userService.findOne(idUsuario);
     }
     //
-    @PostMapping("/Usuarios/Autorizar/{idUsuario}")
+    @GetMapping("/Usuarios/Autorizar/{idUsuario}")
     public void usuarioAutorizar(@PathVariable Integer idUsuario){
         Users users=userService.findOne(idUsuario);
         users.setActive(1);
