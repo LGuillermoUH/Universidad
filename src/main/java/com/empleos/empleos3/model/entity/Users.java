@@ -4,6 +4,7 @@ package com.empleos.empleos3.model.entity;
 
 
 import com.empleos.empleos3.model.utils.EncrytedPasswordUtils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -18,6 +19,7 @@ public class Users {
     @Column(name = "email")
     private String email;
     @Column(name = "password")
+    @JsonIgnore
     private String password;
     @Column(name = "name")
     private String name;

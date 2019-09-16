@@ -14,6 +14,8 @@ import it.ozimov.springboot.mail.model.Email;
 import it.ozimov.springboot.mail.model.defaultimpl.DefaultEmail;
 import it.ozimov.springboot.mail.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.internet.InternetAddress;
@@ -55,17 +57,24 @@ public class UserController {
     }
     //insert
     @PostMapping("/Usuarios/Registro")
-    public void crearUsuario(@RequestBody Users users) throws UnsupportedEncodingException {
-        users.setCampus(null);
-        users.setActive(0);
-        contactoService.save(users.getEmpresa().getContacto());
-        empresaService.save(users.getEmpresa());
-        Set<Role> roles = new HashSet<Role>();
-        roles.add(rolesDao.findOne(2));
-        users.setRoles(roles);
-        userService.save(users);
-        String Email = users.getEmail();
-        sendEmailWithoutTemplating(usersDao.findByEmail(Email).getId());
+    public ResponseEntity<?> crearUsuario(@RequestBody Users users) throws UnsupportedEncodingException {
+
+        if(usersDao.findByEmail( users.getEmail())==null){
+            users.setCampus(null);
+            users.setActive(0);
+            contactoService.save(users.getEmpresa().getContacto());
+            empresaService.save(users.getEmpresa());
+            Set<Role> roles = new HashSet<Role>();
+            roles.add(rolesDao.findOne(2));
+            users.setRoles(roles);
+            userService.save(users);
+            String Email = users.getEmail();
+            sendEmailWithoutTemplating(usersDao.findByEmail(Email).getId());
+            return ResponseEntity.ok("User Register, please wait for authentication");
+        }else{
+           return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email Duplicado");
+        }
+
          
     }
     //delete
