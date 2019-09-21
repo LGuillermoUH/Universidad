@@ -1,6 +1,7 @@
 package com.empleos.empleos3.model.entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Table
 @Entity(name = "vacantes")
@@ -55,13 +56,15 @@ public class Vacantes {
     private int estado;
     @OneToOne
     private Users users;
-    @OneToOne
-    private Carreras carreras;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "vacantes_carreras", joinColumns = @JoinColumn(name = "vacantes_id"), inverseJoinColumns = @JoinColumn(name = "carreras_id"))
+    private List<Carreras> carreras;
 
     public Vacantes() {
     }
 
-    public Vacantes(String nombreVacante, int numeroPlazas, String genero, String estadoCivil, int edad, int experiencia, String idioma, String escolaridad, String horario, String diasLavorales, double sueldoBase, String prestaciones, String comisiones, String tipoContrato, String nivelVacante, int opcionViaje, String funcion, String conociomientos, String habilidades, String requisitosAdd, String logoEmpresa, int estado, Users users, Carreras carreras) {
+    public Vacantes(String nombreVacante, int numeroPlazas, String genero, String estadoCivil, int edad, int experiencia, String idioma, String escolaridad, String horario, String diasLavorales, double sueldoBase, String prestaciones, String comisiones, String tipoContrato, String nivelVacante, int opcionViaje, String funcion, String conociomientos, String habilidades, String requisitosAdd, String logoEmpresa, int estado, Users users, List<Carreras> carreras) {
         this.nombreVacante = nombreVacante;
         this.numeroPlazas = numeroPlazas;
         this.genero = genero;
@@ -85,6 +88,14 @@ public class Vacantes {
         this.logoEmpresa = logoEmpresa;
         this.estado = estado;
         this.users = users;
+        this.carreras = carreras;
+    }
+
+    public List<Carreras> getCarreras() {
+        return carreras;
+    }
+
+    public void setCarreras(List<Carreras> carreras) {
         this.carreras = carreras;
     }
 
@@ -280,11 +291,5 @@ public class Vacantes {
         this.users = users;
     }
 
-    public Carreras getCarreras() {
-        return carreras;
-    }
 
-    public void setCarreras(Carreras carreras) {
-        this.carreras = carreras;
-    }
 }

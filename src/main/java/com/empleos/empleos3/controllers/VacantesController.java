@@ -14,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -36,7 +38,10 @@ public class VacantesController {
     public ResponseEntity crearVacante(@Valid @RequestBody Vacantes vacantes){
        Users users = iUserService.findOne(vacantes.getUsers().getId());
         vacantes.setUsers(users);
-        Carreras carreras = iCarrerasService.findOne(vacantes.getCarreras().getCarrerasId());
+        ArrayList<Carreras> carreras = new ArrayList<Carreras>();
+        for (Carreras carrera:vacantes.getCarreras()) {
+            carreras.add(iCarrerasService.findOne(carrera.getCarrerasId()));
+        }
         vacantes.setCarreras(carreras);
         vacantesService.save(vacantes);
         return new ResponseEntity(HttpStatus.OK);
@@ -48,7 +53,7 @@ public class VacantesController {
     }
 
     @GetMapping("/Vacantes/Carrera/{IdCarras}")
-    public List<Vacantes> vacantes(@PathVariable int id){
+    public List<Vacantes> vacantes(@PathVariable("IdCarras") int id){
         return vacantesDao.findByCarrerasCarrerasId(id);
     }
 }
