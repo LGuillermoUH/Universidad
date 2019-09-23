@@ -47,7 +47,7 @@ public class VacantesController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @GetMapping("/Vacante/{IdVacantes}")
+    @GetMapping("/Vacantes/{IdVacantes}")
     public Vacantes vacante(@PathVariable int id){
         return vacantesService.findOne(id);
     }
