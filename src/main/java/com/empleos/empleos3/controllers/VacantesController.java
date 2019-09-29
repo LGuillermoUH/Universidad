@@ -28,12 +28,12 @@ public class VacantesController {
     private ICarrerasService iCarrerasService;
     @Autowired
     private IVacantesDao vacantesDao;
-    @CrossOrigin(origins = "*")
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/Vacantes")
     public List<Vacantes> AllVavantes(){
         return vacantesService.findAll();
     }
-    @CrossOrigin(allowCredentials = "true",methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT})
+    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/Vacantes/Crear")
     public ResponseEntity crearVacante(@Valid @RequestBody Vacantes vacantes){
        Users users = iUserService.findOne(vacantes.getUsers().getId());
