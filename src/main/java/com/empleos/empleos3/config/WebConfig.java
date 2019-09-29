@@ -14,6 +14,10 @@ public class WebConfig implements WebMvcConfigurer
 
         registry.addMapping("/**").allowedOrigins("*");
         registry.addMapping("/Vacantes/**").allowedOrigins("*");
+        registry.addMapping("/Vacantes").allowedOrigins("*");
+        registry.addMapping("/Vacantes");
+        registry.addMapping("/Vacantes/**");
+        registry.addMapping("/**");
     }
 
 }

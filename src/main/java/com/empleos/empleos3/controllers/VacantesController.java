@@ -28,7 +28,7 @@ public class VacantesController {
     private ICarrerasService iCarrerasService;
     @Autowired
     private IVacantesDao vacantesDao;
-
+    @CrossOrigin(origins = "*")
     @GetMapping("/Vacantes")
     public List<Vacantes> AllVavantes(){
         return vacantesService.findAll();
