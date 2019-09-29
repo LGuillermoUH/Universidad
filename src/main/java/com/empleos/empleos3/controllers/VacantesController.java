@@ -33,7 +33,7 @@ public class VacantesController {
     public List<Vacantes> AllVavantes(){
         return vacantesService.findAll();
     }
-
+    @CrossOrigin(allowCredentials = "true",methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT})
     @PostMapping("/Vacantes/Crear")
     public ResponseEntity crearVacante(@Valid @RequestBody Vacantes vacantes){
        Users users = iUserService.findOne(vacantes.getUsers().getId());
